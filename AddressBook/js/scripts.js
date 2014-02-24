@@ -1,24 +1,45 @@
-var fiBonacci = function(number) {
-  if (number === 1) {
-    return 0;
-  } else if (number === 2) {
-    return 1;
-  } else {
-    return fiBonacci(number - 1) + fiBonacci(number - 2);
-  } 
+var Contact = {
+  fullName: function() {
+    return this.firstName + " " + this.lastName;
+  }
 };
 
-fiBonacci(0);
-
 $(document).ready(function() {
-  $("form#fibonacci").submit(function(event) {
-    var number = parseInt($("input#number").val());
-    var result = fiBonacci(number);
-
-    $(".number").text(number);
-    $("span.fibonacci").text(result);
-
-    $("#result").show();
+  $("form#new-contact").submit(function(event) {
     event.preventDefault();
+
+    var inputtedFirstName = $("input#new-first-name").val();
+    var inputtedLastName = $("input#new-last-name").val();
+    var inputtedAddress = $("input#new-address").val();
+
+    var newContact = Object.create(Contact);
+    newContact.firstName = inputtedFirstName;
+    newContact.lastName = inputtedLastName;
+    newContact.address = inputtedAddress;
+
+    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
+    
+    $(".contact").last().click(function() {
+      $("#show-contacts").show();
+
+      $('#show-contacts h2').text(newContact.fullName());
+      $('.firstname').text(newContact.firstName);
+      $('.lastname').text(newContact.lastName);
+      $('.address').text(newContact.address);
+    });
+
+    this.reset();
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+ 
